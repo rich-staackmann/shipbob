@@ -1,0 +1,32 @@
+﻿<template>
+    <div>
+        <h1>New User Registration </h1>
+
+        <h3>List of Users</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First</th>
+                    <th>Last</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in users">
+                    <td>{{ item.userId }}</td>
+                    <td>{{ item.firstName }}</td>
+                    <td>{{ item.lastName }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Register</h3>
+        <div>
+            <input v-model="firstName">
+            <input v-model="lastName">
+            <button v-on:click="registerUser">Register</button>
+        </div>
+       
+    </div>
+</template>
+
+<script src="./register.ts"></script>
