@@ -18,16 +18,23 @@ namespace ShipBob.Web.Controllers
             _userOrderContext = userOrderContext;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{id}", Name = "GetOrder")]
+        public IActionResult Get(int id)
         {
-            var users = await _userOrderContext.Users
-                .Include(u => u.Orders)
-                .ToArrayAsync();
+            var order = _userOrderContext.Orders
+                .Where(o => o.OrderId == id )
+                .ToList();
+          
+            return Ok(order);
+        }
 
-            
+        [HttpPost]
+        public IActionResult Post([FromBody]Order order)
+        {
+            _userOrderContext.Add(order);
+            _userOrderContext.SaveChanges();
 
-            return Ok(users);
+            return CreatedAtRoute("GetOrder", new { id = order.OrderId }, order);
         }
     }
 }

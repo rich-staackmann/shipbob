@@ -1,6 +1,7 @@
 ﻿import Vue from 'vue';
 import axios from 'axios';
-import { Component } from 'vue-property-decorator';
+import store from '../../store'
+import { Component, Prop } from 'vue-property-decorator';
 
 interface User {
     userId: number;
@@ -10,6 +11,8 @@ interface User {
 
 @Component
 export default class RegisterUserComponent extends Vue {
+    @Prop({ default: 0})
+    currentUserId: number = 0;
     users: User[] = [];
     firstName: string = "";
     lastName: string = "";
@@ -20,7 +23,8 @@ export default class RegisterUserComponent extends Vue {
             userId: 0,
             firstName: this.firstName,
             lastName: this.lastName
-        };
+            };
+        //https://www.linkedin.com/pulse/post-data-from-vuejs-aspnet-core-using-axios-adeyinka-oluwaseun/
         axios({
             method: 'post',
             url: 'http://localhost:51743/api/users',
@@ -31,7 +35,9 @@ export default class RegisterUserComponent extends Vue {
         })
         .then((response) => {
             this.users.push(response.data);
+            store.setMessageAction(response.data.userId);
             console.log(response);
+            console.log(this.currentUserId);
         })
         .catch(function (error) {
             console.log(error);
