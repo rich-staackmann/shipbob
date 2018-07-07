@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\createorders\createorders.ts" />
     <None Remove="ClientApp\components\orders\orders.ts" />
     <None Remove="ClientApp\components\register\register.ts" />
     <None Remove="ClientApp\store.ts" />
@@ -26,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\createorders\createorders.ts" />
     <TypeScriptCompile Include="ClientApp\components\orders\orders.ts" />
     <TypeScriptCompile Include="ClientApp\components\register\register.ts" />
     <TypeScriptCompile Include="ClientApp\store.ts" />

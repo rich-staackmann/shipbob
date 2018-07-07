@@ -9,6 +9,7 @@ const routes = [
     { path: '/counter', component: require('./components/counter/counter.vue.html') },
     { path: '/fetchdata', component: require('./components/fetchdata/fetchdata.vue.html') },
     { path: '/register', component: require('./components/register/register.vue.html') },
+    { path: '/createorders', component: require('./components/createorders/createorders.vue.html') },
     { path: '/orders', component: require('./components/orders/orders.vue.html') }
 ];
 

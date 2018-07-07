@@ -49,4 +49,34 @@ export default class OrderComponent extends Vue {
                 console.log(error);
             });
     }
+    updateOrder(order: Order): void {
+        //https://www.linkedin.com/pulse/post-data-from-vuejs-aspnet-core-using-axios-adeyinka-oluwaseun/
+        axios({
+            method: 'put',
+            url: 'http://localhost:51743/api/orders/' + order.orderId,
+            data: {
+                "orderId": order.orderId,
+                "userId": store.state.id,
+                "trackingId": order.trackingId,
+                "name": order.name,
+                "street": order.street,
+                "city": order.city,
+                "state": order.state,
+                "zipCode": order.zipCode
+            }
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    mounted() {
+        fetch('http://localhost:51743/api/orders/user/' + store.state.id)
+            .then(response => response.json() as Promise<Order[]>)
+            .then(data => {
+                this.orders = data;
+            });
+    }
 }

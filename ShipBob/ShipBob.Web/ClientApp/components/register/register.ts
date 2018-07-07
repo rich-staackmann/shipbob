@@ -1,7 +1,7 @@
 ﻿import Vue from 'vue';
 import axios from 'axios';
 import store from '../../store'
-import { Component, Prop } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 
 interface User {
     userId: number;
@@ -11,8 +11,6 @@ interface User {
 
 @Component
 export default class RegisterUserComponent extends Vue {
-    @Prop({ default: 0})
-    currentUserId: number = 0;
     users: User[] = [];
     firstName: string = "";
     lastName: string = "";
@@ -37,11 +35,13 @@ export default class RegisterUserComponent extends Vue {
             this.users.push(response.data);
             store.setMessageAction(response.data.userId);
             console.log(response);
-            console.log(this.currentUserId);
         })
         .catch(function (error) {
             console.log(error);
         });       
+    }
+    selectUser(userId: number): void {
+        store.setMessageAction(userId);
     }
     mounted() {
         fetch('api/users')

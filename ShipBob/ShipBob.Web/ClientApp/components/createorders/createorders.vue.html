@@ -1,0 +1,15 @@
+﻿<template>
+    <div>
+        <h1>Create Orders</h1>
+
+        <input v-model="trackingId" placeholder="Tracking Id">
+        <input v-model="name" placeholder="Name">
+        <input v-model="street" placeholder="Street">
+        <input v-model="city" placeholder="City">
+        <input v-model="state" placeholder="State">
+        <input v-model="zipCode" placeholder="Zip Code">
+        <button v-on:click="createOrder()">Create</button>
+    </div>
+</template>
+
+<script src="./createorders.ts"></script>

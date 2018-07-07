@@ -9,6 +9,7 @@
                     <th>Id</th>
                     <th>First</th>
                     <th>Last</th>
+                    <th>Select User</th>
                 </tr>
             </thead>
             <tbody>
@@ -16,6 +17,7 @@
                     <td>{{ item.userId }}</td>
                     <td>{{ item.firstName }}</td>
                     <td>{{ item.lastName }}</td>
+                    <td><button v-on:click="selectUser(item.userId)">Select</button></td>
                 </tr>
             </tbody>
         </table>

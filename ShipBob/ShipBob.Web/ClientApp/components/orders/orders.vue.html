@@ -6,6 +6,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Order Id</th>
                     <th>User Id</th>
                     <th>Tracking Id</th>
                     <th>Name</th>
@@ -13,21 +14,24 @@
                     <th>City</th>
                     <th>State</th>
                     <th>Zip</th>
+                    <th>Update Order</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in orders">
+                    <td>{{ item.orderId }}</td>
                     <td>{{ item.userId }}</td>
-                    <td>{{ item.trackingId }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.street }}</td>
-                    <td>{{ item.city }}</td>
-                    <td>{{ item.state }}</td>
-                    <td>{{ item.zipCode }}</td>
+                    <td><input v-model="item.trackingId" :placeholder="item.trackingId"></td>
+                    <td><input v-model="item.name" :placeholder="item.name"></td>
+                    <td><input v-model="item.street" :placeholder="item.street"></td>
+                    <td><input v-model="item.city" :placeholder="item.city"></td>
+                    <td><input v-model="item.state" :placeholder="item.state"></td>
+                    <td><input v-model="item.zipCode" :placeholder="item.zipCode"></td>
+                    <td><button v-on:click="updateOrder(item)">Update</button></td>
                 </tr>
             </tbody>
         </table>
-
+        
     </div>
 </template>
 

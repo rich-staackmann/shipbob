@@ -28,6 +28,16 @@ namespace ShipBob.Web.Controllers
             return Ok(order);
         }
 
+        [HttpGet("user/{userId}")]
+        public IActionResult GetUserOrders(int userId)
+        {
+            var order = _userOrderContext.Orders
+                .Where(o => o.UserId == userId)
+                .ToList();
+
+            return Ok(order);
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody]Order order)
         {
@@ -35,6 +45,27 @@ namespace ShipBob.Web.Controllers
             _userOrderContext.SaveChanges();
 
             return CreatedAtRoute("GetOrder", new { id = order.OrderId }, order);
+        }
+
+        [HttpPut("{orderId}")]
+        public IActionResult Update(int orderId, [FromBody]Order updatedOrder)
+        {
+            var order = _userOrderContext.Orders.Find(orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.TrackingId = updatedOrder.TrackingId;
+            order.Name = updatedOrder.Name;
+            order.Street = updatedOrder.Street;
+            order.City = updatedOrder.City;
+            order.State = updatedOrder.State;
+            order.ZipCode = updatedOrder.ZipCode;
+
+            _userOrderContext.Orders.Update(order);
+            _userOrderContext.SaveChanges();
+            return Ok();
         }
     }
 }
