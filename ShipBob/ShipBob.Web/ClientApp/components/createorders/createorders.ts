@@ -4,7 +4,11 @@ import { Component } from 'vue-property-decorator';
 import store from '../../store'
 
 
-@Component
+@Component({
+    components: {
+        UserListComponent: require('../userlist/userlist.vue.html')
+    }
+})
 export default class CreateOrderComponent extends Vue {
     trackingId: string = "";
     name: string = "";
@@ -13,7 +17,9 @@ export default class CreateOrderComponent extends Vue {
     state: string = "";
     zipCode: string = "";
     errors: string[] = [];
-
+    updateUser(userId: number): void {
+        store.setMessageAction(userId);       
+    }
     createOrder(): void {
         //https://www.linkedin.com/pulse/post-data-from-vuejs-aspnet-core-using-axios-adeyinka-oluwaseun/
         axios({

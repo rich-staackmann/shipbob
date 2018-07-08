@@ -1,0 +1,25 @@
+<template>
+    <div>
+        <h3>List of Users</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Select User</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in users">
+                    <td>{{ item.userId }}</td>
+                    <td>{{ item.firstName }}</td>
+                    <td>{{ item.lastName }}</td>
+                    <td><button v-on:click="$emit('updateUser', item.userId)">Select</button></td>
+                </tr>
+            </tbody>
+        </table>       
+    </div>
+</template>
+
+<script src="./userlist.ts"></script>

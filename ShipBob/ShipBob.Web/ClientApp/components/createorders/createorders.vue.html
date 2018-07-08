@@ -1,7 +1,9 @@
 ﻿<template>
     <div>
         <h1>Create Orders</h1>
+        <user-list-component v-on:updateUser="updateUser"></user-list-component>
 
+        <h3>Create</h3>
         <input v-model="trackingId" placeholder="Tracking Id">
         <input v-model="name" placeholder="Name">
         <input v-model="street" placeholder="Street">
