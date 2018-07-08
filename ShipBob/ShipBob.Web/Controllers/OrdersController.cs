@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShipBob.Data.Models;
+using ShipBob.Web.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,53 +19,53 @@ namespace ShipBob.Web.Controllers
             _userOrderContext = userOrderContext;
         }
 
-        [HttpGet("{id}", Name = "GetOrder")]
-        public IActionResult Get(int id)
-        {
-            var order = _userOrderContext.Orders
-                .Where(o => o.OrderId == id )
-                .ToList();
-          
-            return Ok(order);
-        }
-
-        [HttpGet("user/{userId}")]
+        [HttpGet("user/{userId}", Name = "GetUserOrders")]
         public IActionResult GetUserOrders(int userId)
         {
-            var order = _userOrderContext.Orders
-                .Where(o => o.UserId == userId)
-                .ToList();
+            var user = _userOrderContext.Users
+                .Include(u => u.Orders)
+                .Single(x => x.UserId == userId);
 
-            return Ok(order);
+            return Ok(user.Orders);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Order order)
+        public IActionResult Create([FromBody]OrderDTO orderDTO)
         {
-            _userOrderContext.Add(order);
-            _userOrderContext.SaveChanges();
+            var user = _userOrderContext.Users
+                .Where(x => x.UserId == orderDTO.UserId)
+                .ToList()
+                .FirstOrDefault();
+            if(user != null)
+            {
+                var order = new Order(orderDTO.TrackingId, orderDTO.Name, orderDTO.Street,orderDTO.City,orderDTO.State,orderDTO.ZipCode,orderDTO.UserId);
+                user.AddOrder(order, _userOrderContext);
+                return CreatedAtRoute("GetUserOrders", new { userId = order.UserId }, order);
+            }
 
-            return CreatedAtRoute("GetOrder", new { id = order.OrderId }, order);
+            return new ObjectResult("The order's user was not found")
+            {
+                StatusCode = 412
+            };
         }
 
         [HttpPut("{orderId}")]
-        public IActionResult Update(int orderId, [FromBody]Order updatedOrder)
+        public IActionResult Update(int orderId, [FromBody]OrderDTO orderDTO)
         {
-            var order = _userOrderContext.Orders.Find(orderId);
+            var user = _userOrderContext.Users
+               .Single(x => x.UserId == orderDTO.UserId);
+            var order = _userOrderContext.Entry(user)
+                .Collection(u => u.Orders)
+                .Query()
+                .Single(o => o.OrderId == orderId);
+
             if (order == null)
             {
                 return NotFound();
             }
 
-            order.TrackingId = updatedOrder.TrackingId;
-            order.Name = updatedOrder.Name;
-            order.Street = updatedOrder.Street;
-            order.City = updatedOrder.City;
-            order.State = updatedOrder.State;
-            order.ZipCode = updatedOrder.ZipCode;
-
-            _userOrderContext.Orders.Update(order);
-            _userOrderContext.SaveChanges();
+            order.UpdateOrder(orderDTO.TrackingId, orderDTO.Name, orderDTO.Street, orderDTO.City, orderDTO.State, orderDTO.ZipCode, _userOrderContext);
+            
             return Ok();
         }
     }

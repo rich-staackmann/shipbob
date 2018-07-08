@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShipBob.Data.Models;
 
 namespace ShipBob.Data.Migrations
 {
     [DbContext(typeof(UserOrderContext))]
-    partial class UserOrderContextModelSnapshot : ModelSnapshot
+    [Migration("20180708004709_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace ShipBob.Data.Migrations
 
             modelBuilder.Entity("ShipBob.Data.Models.Order", b =>
                 {
-                    b.HasOne("ShipBob.Data.Models.User")
+                    b.HasOne("ShipBob.Data.Models.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

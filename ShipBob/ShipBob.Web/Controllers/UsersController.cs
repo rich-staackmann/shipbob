@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShipBob.Data.Models;
+using ShipBob.Web.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,10 @@ namespace ShipBob.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]User user)
+        public IActionResult Post([FromBody]UserDTO userDTO)
         {
+            var user = new User(userDTO.FirstName, userDTO.LastName);
+
             _userOrderContext.Add(user);
             _userOrderContext.SaveChanges();
 
