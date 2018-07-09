@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShipBob.Web", "ShipBob.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipBob.Data", "ShipBob.Data\ShipBob.Data.csproj", "{CFF02C61-0199-467E-B4B8-CD633A6F0F24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipBob.Tests", "ShipBob.Tests\ShipBob.Tests.csproj", "{D9E4C719-9D70-4FBA-A135-0B80C4FB6AD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CFF02C61-0199-467E-B4B8-CD633A6F0F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFF02C61-0199-467E-B4B8-CD633A6F0F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFF02C61-0199-467E-B4B8-CD633A6F0F24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9E4C719-9D70-4FBA-A135-0B80C4FB6AD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9E4C719-9D70-4FBA-A135-0B80C4FB6AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9E4C719-9D70-4FBA-A135-0B80C4FB6AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9E4C719-9D70-4FBA-A135-0B80C4FB6AD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

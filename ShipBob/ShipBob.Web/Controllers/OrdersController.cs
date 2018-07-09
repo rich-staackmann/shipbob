@@ -52,21 +52,33 @@ namespace ShipBob.Web.Controllers
         [HttpPut("{orderId}")]
         public IActionResult Update(int orderId, [FromBody]OrderDTO orderDTO)
         {
-            var user = _userOrderContext.Users
-               .Single(x => x.UserId == orderDTO.UserId);
-            var order = _userOrderContext.Entry(user)
-                .Collection(u => u.Orders)
-                .Query()
-                .Single(o => o.OrderId == orderId);
+            try
+            {
+                var user = _userOrderContext.Users
+                    .Include(u => u.Orders)
+                    .Single(x => x.UserId == orderDTO.UserId);
+                var order = user.Orders.Where(o => o.OrderId == orderId).FirstOrDefault();
 
-            if (order == null)
+                if (order == null)
+                {
+                    return NotFound();
+                }
+
+                order.UpdateOrder(orderDTO.TrackingId, orderDTO.Name, orderDTO.Street, orderDTO.City, orderDTO.State, orderDTO.ZipCode, _userOrderContext);
+
+                return Ok();
+            }
+            catch(InvalidOperationException ex)
             {
                 return NotFound();
             }
-
-            order.UpdateOrder(orderDTO.TrackingId, orderDTO.Name, orderDTO.Street, orderDTO.City, orderDTO.State, orderDTO.ZipCode, _userOrderContext);
-            
-            return Ok();
+            catch(Exception ex)
+            {
+                return new ObjectResult("Error")
+                {
+                    StatusCode = 500
+                };
+            }
         }
     }
 }
